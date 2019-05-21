@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.pagatodo.registerapp"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+        debug {
+            shrinkResources false
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "default"
+
+    productFlavors {
+        // Flavor principal donde se compila CoDi
+        demo {
+            applicationId "com.pagatodo.registration_demo"
+            buildConfigField("String", "EIGA", "\"https://idun-qa.yaganaste.net/api/\"")
+
+
+        }
+        // Flavor donde se compila CoDi con configuración del gemelo
+        qa {
+            applicationId "com.pagatodo.registration_qa"
+            buildConfigField("String", "EIGA", "\"https://eigayg.stagingbaas.com/api/\"")
+            buildConfigField("String", "TAG_DEBUG", "\"WSC\"")
+        }
+
+        produccion {
+            applicationId "com.pagatodo.registration_production"
+            buildConfigField("String", "EIGA", "\"https://idungem-qa.yaganaste.net/api/\"")
+
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation project(':registration_process')
+}
